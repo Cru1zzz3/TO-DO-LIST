@@ -1,0 +1,32 @@
+<html>
+<head>
+	<title>
+		ANGULAR TO DO LIST
+	</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+</head>
+<body>
+	<script>
+	var app = angular.module("toDoApp",[]);
+	app.controller("toDoCtrl", function($scope){
+		$scope.plans = ["Make sex", "sleep", "fuck urs3lv"];
+		$scope.addToDo = function(){
+			$scope.plans.push($scope.newToDo);
+		}
+
+		$scope.deleteToDo = function(x){
+			$scope.plans.splice(x,1);
+		}
+	})
+	</script>
+
+	<div ng-app="toDoApp" ng-controller="toDoCtrl">
+		<ul>
+			<li ng-repeat="x in plans"> {{x}}<span ng-click="deleteToDo($index)"> X</span>  </li> 
+		</ul>
+
+		<input ng-model="newToDo" placeholder="Enter new To Do">
+		<button ng-click="addToDo()"> Add new TO DO </button>
+	</div>
+<body>
+</html>
