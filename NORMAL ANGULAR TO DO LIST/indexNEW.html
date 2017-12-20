@@ -1,0 +1,55 @@
+<html>
+<head>
+	<title>
+		ANGULAR TO DO LIST
+	</title>
+
+<scriptsrc="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+	<script>
+	var app = angular.module("toDoApp",[]);
+	app.controller("toDoCtrl", function($scope){
+		$scope.plans = ["Make sex", "sleep", "fuck urs3lv"];
+		$scope.date = ["09/11/2001"];
+
+		$scope.addToDo = function(){
+			$scope.plans.push($scope.newToDo);
+			$scope.date.push($scope.dateToDo)
+		}
+
+		$scope.deleteToDo = function(x){
+			$scope.plans.splice(x,1);
+		}
+
+		$scope.completedToDo = function(){
+		}
+	})
+	</script>
+
+	<div ng-app="toDoApp" ng-controller="toDoCtrl">
+		<table class="table">
+			<tr ng-repeat="x in plans">
+			<td>{{x}}</td>
+			
+			<td ng-click="deleteToDo($index)"> X </td>
+			<tr>
+		</table>
+	
+		
+		<input ng-model="newToDo" placeholder="Enter new To Do">
+		
+		<input size="16" type="text" value="2012-06-15 14:45" readonly class="form_datetime">
+ 
+<script type="text/javascript">
+    $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+</script>    
+
+		<button ng-click="addToDo()"> Add new TO DO </button>
+
+	</div>
+<body>
+</html>
