@@ -1,55 +1,105 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="toDoApp">
 <head>
-	<title>
-		ANGULAR TO DO LIST
-	</title>
+	<title>Hello AngularJS - Add Table Row Dynamically</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="/resources/demos/style.css">
 
-<scriptsrc="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script	src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-</head>
-<body>
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+	<style>
+
+
+	</style>
+
 	<script>
-	var app = angular.module("toDoApp",[]);
-	app.controller("toDoCtrl", function($scope){
-		$scope.plans = ["Make sex", "sleep", "fuck urs3lv"];
-		$scope.date = ["09/11/2001"];
-
-		$scope.addToDo = function(){
-			$scope.plans.push($scope.newToDo);
-			$scope.date.push($scope.dateToDo)
-		}
-
-		$scope.deleteToDo = function(x){
-			$scope.plans.splice(x,1);
-		}
-
-		$scope.completedToDo = function(){
-		}
-	})
+	$( function() {
+	$( "#sortable" ).sortable();
+	$( "#sortable" ).disableSelection();
+	} );
 	</script>
 
-	<div ng-app="toDoApp" ng-controller="toDoCtrl">
-		<table class="table">
-			<tr ng-repeat="x in plans">
-			<td>{{x}}</td>
-			
-			<td ng-click="deleteToDo($index)"> X </td>
-			<tr>
-		</table>
-	
-		
-		<input ng-model="newToDo" placeholder="Enter new To Do">
-		
-		<input size="16" type="text" value="2012-06-15 14:45" readonly class="form_datetime">
- 
-<script type="text/javascript">
-    $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
-</script>    
+</head>
+<!-- Controller name goes here -->
+<body ng-controller="toDoCtrl">
+<script>
+    var toDoApp = angular.module("toDoApp", []);
+    toDoApp.controller("toDoCtrl", function($scope) {
+        $scope.notes = [
+            { 'toDo':'Go shopping',
+                'date': '2017-12-30'},
+            { 'toDo':'Call Bob',
+                'date': '2017-12-24'},
+            { 'toDo':'Do homework',
+                'date': '2017-12-23'}
+        ];
+        $scope.addToDo = function(){
+            $scope.notes.push({ 'toDo':$scope.toDo, 'date': $scope.date});
+            $scope.toDo ='';
+            $scope.date ='';
+        }
 
-		<button ng-click="addToDo()"> Add new TO DO </button>
+        $scope.deleteToDo = function(x){
+            $scope.notes.splice(x,1);
+    	}
 
+		});
+</script>
+
+
+<table class="table" >
+	<tbody id="sortable">
+	<tr>
+		<th> To do:
+		</th>
+		<th> Until:
+		</th>
+
+	</tr>
+	<tr ng-repeat="note in notes">
+
+		<td>
+			<div>
+				<span class="glyphicon glyphicon-resize-vertical"></span>
+				{{ note.toDo }}
+			</div>
+		</td>
+		<td>{{ note.date }}
+		</td>
+		<td ng-click="deleteToDo($index)"> <span class="glyphicon glyphicon-remove"></span> </td>
+	</tr>
+	</tbody>
+</table>
+
+<form class="form-inline" role="form" ng-submit="addToDo()">
+	<div class="form-group">
+		<label class="col-md-3 control-label">To do:</label>
+		<div class="col-md-8">
+			<input type="text" class="form-control" placeholder="What should to do?" name="toDo"
+				   ng-model="toDo" />
+		</div>
 	</div>
-<body>
+	<div class="form-group">
+		<label class="col-md-3 control-label">Until:</label>
+		<div class="col-md-8">
+			<input  class="form-control" type="date"  value="1970-01-01" name="date"
+					ng-model="date" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div style="padding-left:110px">
+			<input type="submit" value="Make new note" class="btn btn-primary"/>
+		</div>
+	</div>
+</form>
+
+
+</body>
 </html>
