@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="toDoApp">
+<head>
+    <title>Hello AngularJS - Add Table Row Dynamically</title>
+    <link rel="stylesheet"
+          href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script
+            src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script
+            src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script
+            src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
+    <script src="assets/js/controllers.js"></script>
+</head>
+<!-- Controller name goes here -->
+<body ng-controller="toDoCtrl">
+<script>
+    var toDoApp = angular.module("toDoApp", []);
+    toDoApp.controller("toDoCtrl", function($scope) {
+        $scope.notes = [
+            { 'toDo':'Go shopping',
+                'date': '11/11/11'},
+            { 'toDo':'Call Bob',
+                'date': '22/22/22'},
+            { 'toDo':'Do homework',
+                'date': '33/33/33'}
+        ];
+        $scope.addRow = function(){
+            $scope.notes.push({ 'toDo':$scope.toDo, 'date': $scope.date});
+            $scope.toDo ='';
+            $scope.date ='';
+
+        };
+        });
+</script>
+
+
+<table class="table">
+    <tr>
+        <th> To do:
+        </th>
+        <th> Until:
+        </th>
+
+    </tr>
+    <tr ng-repeat="note in notes">
+        <td>{{ note.toDo }}
+        </td>
+        <td>{{ note.date }}
+        </td>
+    </tr>
+</table>
+
+<form class="form-inline" role="form" ng-submit="addRow()">
+    <div class="form-group">
+
+        <div class="col-md-8">
+            <input type="text" class="form-control" name="toDo"
+                   ng-model="toDo" />
+        </div>
+    </div>
+    <div class="form-group">
+
+        <div class="col-md-8">
+            <input  class="form-control" type="date" value="1970-01-01" name="date"
+                   ng-model="date" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div style="padding-left:110px">
+            <input type="submit" value="Submit" class="btn btn-primary"/>
+        </div>
+    </div>
+</form>
+
+
+</body>
+</html>

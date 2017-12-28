@@ -1,0 +1,114 @@
+<!DOCTYPE html >
+<html ng-app="toDoApp">
+<head>
+	<title>TO DO LIST</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="/resources/demos/style.css">
+
+	<script	src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
+
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+	<style>
+
+		.completed{
+			background-color:green;
+		}
+
+	</style>
+
+	<script>
+	$( function() {
+	$( "#sortable" ).sortable();
+	$( "#sortable" ).disableSelection();
+	} );
+	</script>
+
+</head>
+<!-- Controller name goes here -->
+<body ng-controller="toDoCtrl">
+<nav style="background-color: #FFE373" class="navbar navbar-inverse">
+	<div  class="container-fluid">
+		<p align="center" style="font-size: 45px">TO DO LIST  </p>
+	</div>
+</nav>
+
+<script>
+    var toDoApp = angular.module("toDoApp", []);
+    toDoApp.controller("toDoCtrl", function($scope) {
+        $scope.notes = [
+            { 'toDo':'Go shopping',
+                'date': '2017-12-30'},
+            { 'toDo':'Call Bob',
+                'date': '2017-12-24'},
+            { 'toDo':'Do homework',
+                'date': '2017-12-23'}
+        ];
+        $scope.addToDo = function(){
+            $scope.notes.push({ 'toDo':$scope.toDo, 'date': $scope.date});
+            $scope.toDo ='';
+            $scope.date ='';
+        }
+
+
+        $scope.deleteToDo = function(x){
+            $scope.notes.splice(x,1);
+        }
+
+		});
+</script>
+
+
+<table class="table" >
+	<tbody id="sortable">
+	<tr >
+		<th> To do:
+		</th>
+		<th> Until:
+		</th>
+
+	</tr>
+	<tr   ng-class="{completed : item.isgreen}"   ng-init="item.isgreen = false" ng-repeat="note in notes">
+		<td><div><span class="glyphicon glyphicon-resize-vertical"></span>{{ note.toDo }}</div></td>
+		<td> {{ note.date }} </td>
+
+		<td>
+			<div>
+				<span ng-click="item.isgreen =!item.isgreen"  class="glyphicon glyphicon-ok"></span>
+				<span ng-click="deleteToDo($index)" class="glyphicon glyphicon-remove"></span>
+			</div>
+		</td>
+	</tr>
+	</tbody>
+</table>
+
+<form align="center" class="form-inline" role="form" ng-submit="addToDo()">
+	<div class="form-group">
+		<label class="col-md-3 control-label">To do:</label>
+		<div class="col-md-8">
+			<input type="text" class="form-control" placeholder="What should to do?" name="toDo"
+				   ng-model="toDo" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 control-label">Until:</label>
+		<div class="col-md-8">
+			<input  class="form-control" type="date"  value="1970-01-01" name="date"
+					ng-model="date" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div style="padding-left:10px">
+			<input type="submit" value="Make new note" class="btn btn-primary"/>
+		</div>
+	</div>
+</form>
+
+
+</body>
+</html>
